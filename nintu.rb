@@ -75,8 +75,12 @@ get '/experiment/:name' do |experiment_name|
 	content_type :json
 	experiment = Experiment.find_by_name(experiment_name)
 	if experiment
-		{ :name	=> experiment.name,
-		  :date => experiment.date
+		observation = experiment.observations.find_by_temperature(45)
+		{ :name			=> experiment.name,
+		  :date 		=> experiment.date,
+		  :temperature 	=> observation.temperature,
+		  :input 		=> observation.input,
+		  :output 		=> observation.output
 		}.to_json
 	else
 		{ :response => "Error: No record found for experiment #{experiment_name}."}.to_json
