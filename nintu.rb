@@ -87,6 +87,18 @@ get '/experiment/:name' do |experiment_name|
 	end	
 end
 
+get '/observations/:name/:number' do |experiment_name, observation_number|
+	experiment = Experiment.find_by_name(experiment_name)
+	if experiment
+		observation = experiment.observations.find(observation_number)
+#		observation.each do |obs|
+			"Observation temperature #{observation.temperature}, input #{observation.input}, output #{observation.output}."
+#		end
+	else
+		"Error."
+	end	
+end
+
 get '/' do
 	content_type :json 
 	{ :application => 'Nintu Experiment Information Server', :version => 'v0.1-103' }.to_json
