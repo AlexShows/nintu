@@ -90,10 +90,11 @@ end
 get '/observations/:name/:number' do |experiment_name, observation_number|
 	experiment = Experiment.find_by_name(experiment_name)
 	if experiment
-		observation = experiment.observations.find(observation_number)
-#		observation.each do |obs|
-			"Observation temperature #{observation.temperature}, input #{observation.input}, output #{observation.output}."
-#		end
+		observation = experiment.observations.last(observation_number)
+		observation.each do |obs|
+			"Observation temperature #{obs.temperature}, input #{obs.input}, output #{obs.output}."
+		end
+		"Done"
 	else
 		"Error."
 	end	
